@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "Network.hpp"
+#include "network.hpp"
 
 
 typedef enum
