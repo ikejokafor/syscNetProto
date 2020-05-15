@@ -5,7 +5,7 @@
 
 
 typedef enum
-{   
+{
     NULL_MSG            = -1,
     CONNECT_HARDWARE    = 0,
     CONNECT_SOFTWARE    = 1,
@@ -16,11 +16,14 @@ typedef enum
     ACCEL_PARAM_PYLD    = 6,
     ACCEL_END_PARAM     = 7,
     ACCEL_START         = 8,
-    ACCEL_FINISHED      = 9
+    ACCEL_FINISHED      = 9,
+    ACCEL_BGN_OUTPUT    = 10,
+    ACCEL_OUTPUT_PYLD   = 11,
+    ACCEL_END_OUTPUT    = 12
 } msgType_t;
 
 
-typedef struct 
+typedef struct
 {
     uint32_t msgType;
     uint32_t length;
@@ -31,11 +34,11 @@ typedef struct
 /**
 * function
 *
-* \param[in] 
-* \param[in, out] 
-* \param[in] 
+* \param[in]
+* \param[in, out]
+* \param[in]
 *
-* \return 
+* \return
 */
 int send_message(int sock, msgHeader_t* hdr, uint8_t* blk);
 
@@ -43,22 +46,22 @@ int send_message(int sock, msgHeader_t* hdr, uint8_t* blk);
 /**
 * function
 *
-* \param[in] 
-* \param[in, out] 
-* \param[in] 
+* \param[in]
+* \param[in, out]
+* \param[in]
 *
-* \return 
-*/       
+* \return
+*/
 int recv_message(int sock, msgHeader_t* hdr, uint8_t* blk);
 
 
 /**
 * function
 *
-* \param[in] 
-* \param[in, out] 
-* \param[in] 
+* \param[in]
+* \param[in, out]
+* \param[in]
 *
-* \return 
-*/     
+* \return
+*/
 int wait_message(int sock, msgHeader_t* hdr, uint8_t* blk, msgType_t mt);
