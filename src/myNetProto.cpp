@@ -1,4 +1,4 @@
-#include "MyNetProto.hpp"
+#include "myNetProto.hpp"
 
 
 int send_message(int socket, msgHeader_t* hdr, uint8_t* blk)
