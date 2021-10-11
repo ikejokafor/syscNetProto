@@ -2,6 +2,11 @@
 
 
 #include "network.hpp"
+#include <sys/stat.h>
+#include <unistd.h>
+#include <string>
+#include <fstream>
+#include <string>
 
 
 typedef enum
@@ -21,7 +26,9 @@ typedef enum
     ACCL_FINISHED           = 11,
     ACCL_BGN_OUTPUT         = 12,
     ACCL_OUTPUT_PYLD        = 13,
-    ACCL_END_OUTPUT         = 14
+    ACCL_END_OUTPUT         = 14,
+    ACCL_ACK                = 15,
+    SOFT_ACK                = 16
 } msgType_t;
 
 
