@@ -2,21 +2,33 @@
 using namespace std;
 
 
+// static string prefix = string(getenv("WORKSPACE_PATH"));
+static string prefix = "/export/home/izo5011/WorkSpace/";
+
+
 int send_message(int socket, msgHeader_t* hdr, uint8_t* blk)
 {
     int ret;
 #ifdef MODEL_TECH
     FILE* fd;
-    string buf_path = string(getenv("WORKSPACE_PATH")) + "/SYSC_FPGA/simulation/" + to_string(hdr->msgType) + ".bin";
+    string buf_path = prefix + "/SYSC_FPGA/simulation/" + to_string(hdr->msgType) + ".bin";
     fd = fopen(buf_path.c_str(), "w");
     ret = fwrite(hdr, 1, sizeof(msgHeader_t), fd);
     fflush(fd);
     fclose(fd);
+    buf_path = prefix + "/SYSC_FPGA/simulation/" + to_string(hdr->msgType) + "_done.bin";
+    fd = fopen(buf_path.c_str(), "w");
+    fflush(fd);
+    fclose(fd);
     if(hdr->pyld)
     {
-        string buf_path = string(getenv("WORKSPACE_PATH")) + "/SYSC_FPGA/simulation/" + to_string(hdr->msgType) + "_pyld.bin";
+        string buf_path = prefix + "/SYSC_FPGA/simulation/" + to_string(hdr->msgType) + "_pyld.bin";
         fd = fopen(buf_path.c_str(), "w");
         ret = fwrite(blk, 1, hdr->length, fd);
+        fflush(fd);
+        fclose(fd);
+        buf_path = prefix + "/SYSC_FPGA/simulation/" + to_string(hdr->msgType) + "_pyld_done.bin";
+        fd = fopen(buf_path.c_str(), "w");
         fflush(fd);
         fclose(fd);
     }
@@ -41,20 +53,30 @@ int recv_message(int socket, msgHeader_t* hdr, uint8_t* blk)
     int ret;
 #ifdef MODEL_TECH
     FILE* fd;
-    string buf_path = string(getenv("WORKSPACE_PATH")) + "/SYSC_FPGA/simulation/" + to_string(hdr->msgType) + ".bin";
+    string buf_path = prefix + "/SYSC_FPGA/simulation/" + to_string(hdr->msgType) + "_done.bin";
     struct stat buffer;
     while(stat(buf_path.c_str(), &buffer));
+    if(remove(buf_path.c_str()))
+    {
+        perror("Error deleting file");
+    }
+    buf_path = prefix + "/SYSC_FPGA/simulation/" + to_string(hdr->msgType) + ".bin";
     fd = fopen(buf_path.c_str(), "r");
     ret = fread(hdr, 1, sizeof(msgHeader_t), fd);
     fclose(fd);
     if(remove(buf_path.c_str()))
     {
         perror("Error deleting file");
-    }
+    }    
     if(hdr->pyld)
     {
-        string buf_path = string(getenv("WORKSPACE_PATH")) + "/SYSC_FPGA/simulation/" + to_string(hdr->msgType) + "_pyld.bin";
+        string buf_path = prefix + "/SYSC_FPGA/simulation/" + to_string(hdr->msgType) + "_pyld_done.bin";
         while(stat(buf_path.c_str(), &buffer));
+        if(remove(buf_path.c_str()))
+        {
+            perror("Error deleting file");
+        }
+        buf_path = prefix + "/SYSC_FPGA/simulation/" + to_string(hdr->msgType) + "_pyld.bin";
         fd = fopen(buf_path.c_str(), "r");        
         ret = fread(blk, 1, hdr->length, fd);
         fclose(fd);
