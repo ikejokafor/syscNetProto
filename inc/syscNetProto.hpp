@@ -17,26 +17,26 @@ typedef enum
     CONNECT_SOFTWARE        = 1,  /*!< Connect to software app */ 
     ACCL_SYSC_FPGA_BGN_CFG  = 2,  /*!< Begin systemc accelerator configuration */ 
     ACCL_SYSC_FPGA_END_CFG  = 3,  /*!< End systemc accelerator configuration */  
-    ACCL_BGN_CFG            = 4,  /*!< Enum value TVal1 */
-    ACCL_END_CFG            = 5,  /*!< Enum value TVal1 */
-    ACCL_BGN_PARAM          = 6,  /*!< Enum value TVal1 */
-    ACCL_END_PARAM          = 7,  /*!< Enum value TVal1 */
-    ACCL_START              = 8,  /*!< Enum value TVal1 */
-    ACCL_COMPLETE           = 9,  /*!< Enum value TVal1 */
-    ACCL_BGN_OUTPUT         = 10, /*!< Enum value TVal1 */
-    ACCL_END_OUTPUT         = 11, /*!< Enum value TVal1 */
-    ACCL_PYLD               = 12, /*!< Enum value TVal1 */
-    ACCL_ACK                = 13, /*!< Enum value TVal1 */
-    SOFT_ACK                = 14  /*!< Enum value TVal1 */
+    ACCL_BGN_CFG            = 4,  /*!< Begin Accelerator Configuration */
+    ACCL_END_CFG            = 5,  /*!< End Accelerator Configuration */
+    ACCL_BGN_PARAM          = 6,  /*!< Begin Accelerator Parameter Transmitting  */
+    ACCL_END_PARAM          = 7,  /*!< End Accelerator Parameter Transmitting */
+    ACCL_START              = 8,  /*!< Tell Accelerator to Start */
+    ACCL_COMPLETE           = 9,  /*!< Accelerator Finished processing */
+    ACCL_BGN_OUTPUT         = 10, /*!< Begin Accelerator Sending Output Data */
+    ACCL_END_OUTPUT         = 11, /*!< End Accelerator Sending Output Data */
+    ACCL_PYLD               = 12, /*!< Payload sent between software and accelerator */
+    ACCL_ACK                = 13, /*!< Accelerator Ackknowledges message */
+    SOFT_ACK                = 14  /*!< Sotware Ackknowledges message */
 } msgType_t;
 
 
 //! enumerated type for protocol messages
 typedef struct
 {
-    uint32_t msgType;  /*!< Enum value TVal1. */
-    uint32_t length;   /*!< Enum value TVal1. */
-    uint32_t pyld;     /*!< Enum value TVal1. */
+    uint32_t msgType;  /*!< Message type */
+    uint32_t length;   /*!< Mesage Length */
+    uint32_t pyld;     /*!< Flag signifying payload presence */
 } msgHeader_t;
 
 
